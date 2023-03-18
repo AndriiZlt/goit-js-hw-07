@@ -3,6 +3,7 @@ import { galleryItems } from "./gallery-items.js";
 
 const cardsMarkup = createCardsMakrup(galleryItems);
 const galleryUlRef = document.querySelector(".gallery");
+let backDrop = new Object();
 
 galleryUlRef.addEventListener("click", onCardClick);
 
@@ -25,12 +26,19 @@ function createCardsMakrup(galleryItems) {
     .join("");
 }
 
-function onCardClick(event) {
-  const instance = basicLightbox.create(`
-    <img src="${event.target.dataset.source}" width="800" height="600">
-`);
+function onCardClick(e) {
+  backDrop = basicLightbox.create(`
+  <img src="${e.target.dataset.source}" width="800" height="600">
+  `);
+  window.addEventListener("keydown", onKeyPress);
+  backDrop.show();
+}
 
-  instance.show();
+function onKeyPress(e) {
+  if (e.key === "Escape") {
+    backDrop.close();
+    window.removeEventListener("keydown", onKeyPress);
+  }
 }
 
 console.log(galleryItems);
