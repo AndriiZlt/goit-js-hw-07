@@ -37,7 +37,6 @@ function onCardClick(e) {
   instance.show();
 
   function onKeyPress(e) {
-    console.log(e.key);
     if (e.key === "Escape") {
       instance.close();
     }
