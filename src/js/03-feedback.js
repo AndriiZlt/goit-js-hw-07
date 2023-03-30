@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const inputRef = document.querySelector('[name="email"]');
 const messageRef = document.querySelector('[name="message"]');
 const formRef = document.querySelector('.feedback-form');
@@ -10,11 +11,12 @@ if (localStorage.getItem('feedback-form-state')) {
   messageRef.value = message;
 }
 
-formRef.addEventListener('submit', onSubmit);
-formRef.addEventListener('input', onInput);
-
-function onInput(event) {
+const onInput = function (event) {
   const currentFormElements = event.currentTarget.elements;
+  console.log(
+    currentFormElements.email.value,
+    currentFormElements.message.value
+  );
   localStorage.setItem(
     'feedback-form-state',
     JSON.stringify({
@@ -22,7 +24,10 @@ function onInput(event) {
       message: currentFormElements.message.value,
     })
   );
-}
+};
+
+formRef.addEventListener('submit', onSubmit);
+formRef.addEventListener('input', onInput);
 
 function onSubmit(event) {
   event.preventDefault();
